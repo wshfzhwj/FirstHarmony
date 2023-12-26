@@ -21,6 +21,7 @@ struct Index {
       // Text("ssss")
       //正确返回
       Button('请求')
+        .fontColor(Color.White)
         .onClick(() => {
           this.httpGet.doGet4().then(response => {
             this.wanAndroidBean = JSON.parse(response.result.toString())
