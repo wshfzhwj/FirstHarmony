@@ -1,7 +1,7 @@
-import { WanBean } from './WanBean';
+import { WanBeanList } from './WanBeanList';
 
 export class WanAndroidBean {
   errorCode: number = 0;
   errorMsg: string;
-  data: WanBean;
+  data: WanBeanList;
 }
