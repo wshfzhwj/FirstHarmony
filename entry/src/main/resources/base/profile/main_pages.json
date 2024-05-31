@@ -1,5 +1,13 @@
 {
   "src": [
-    "pages/Index"
+    "pages/Index",
+    "pages/StorageLinkAPage",
+    "pages/StorageLinkBPage",
+    "pages/ComponentA",
+    "pages/NetworkPage",
+    "pages/diary/DiaryPage",
+    "pages/diary/EditDiaryPage",
+    "pages/diary/AddDiaryPage",
+    "pages/KvManagerPage"
   ]
 }

@@ -43,4 +43,3 @@ export class HttpGet {
     return model;
   }
 }
-

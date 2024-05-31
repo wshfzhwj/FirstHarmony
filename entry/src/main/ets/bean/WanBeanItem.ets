@@ -1,4 +1,4 @@
-export class WanListBean {
+export class WanBeanItem {
   id: string;
   desc: string;
   niceDate: string;
