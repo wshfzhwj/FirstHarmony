@@ -1,7 +1,7 @@
 import router from '@ohos.router'
 import prompt from '@ohos.prompt'
-import { Diary } from '../../diary/Diary'
-import { DiaryAPI } from '../../diary/DiaryAPI'
+import { Diary } from '../../bean/Diary'
+import { DiaryAPI } from '../../model/DiaryAPI'
 
 @Component
 export default struct DiaryItem {
