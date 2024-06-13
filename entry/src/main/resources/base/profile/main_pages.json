@@ -1,13 +1,26 @@
 {
   "src": [
-    "pages/Index",
-    "pages/StorageLinkAPage",
-    "pages/StorageLinkBPage",
-    "pages/ComponentA",
-    "pages/NetworkPage",
-    "pages/diary/DiaryPage",
+    "pages/MainIndex",
+    "pages/storage/StorageLinkAPage",
+    "pages/storage/StorageLinkBPage",
+    "pages/demo/ComponentA",
+    "pages/network/NetworkIndex",
+    "pages/diary/DiaryIndex",
     "pages/diary/EditDiaryPage",
     "pages/diary/AddDiaryPage",
-    "pages/KvManagerPage"
+    "pages/kvmanager/KvManagerIndex",
+    "pages/WelcomeIndex",
+    "pages/healthy/ItemIndex",
+    "pages/storage/LocalStorageDemoIndex",
+    "pages/storage/LocalStorageBroIndex",
+    "pages/storage/AppAndLocalStorageIndex",
+    "pages/storage/GalleryIndex",
+    "pages/storage/LocalStorageSharedIndex",
+    "pages/storage/LocalStorageSharedIndex2",
+    "pages/storage/PersistentStorageIndex",
+    "pages/storage/PersistPropsNestIndex",
+    "pages/storage/PersistPropsOtherIndex",
+    "pages/storage/StorageTestPage",
+    "pages/notification/NotificationIndex"
   ]
 }

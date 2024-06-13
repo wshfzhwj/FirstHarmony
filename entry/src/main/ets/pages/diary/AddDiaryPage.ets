@@ -1,9 +1,9 @@
 import router from '@ohos.router'
 import prompt from '@ohos.prompt'
-import { Diary } from '../../diary/Diary'
+import { Diary } from '../../bean/Diary'
 import systemDateTime from '@ohos.systemDateTime';
 // import distributedKVStore from '@ohos.data.distributedKVStore';
-import { diaryAPI as API} from '../../diary/DiaryAPI';
+import { diaryAPI as API} from '../../model/DiaryAPI';
 
 @Entry
 @Component
