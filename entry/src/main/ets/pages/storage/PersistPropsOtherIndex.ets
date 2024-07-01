@@ -13,7 +13,7 @@ struct PersistPropsOtherIndex {
       Text(this.user.name + "----" + this.user.age)
       Button("修改age").onClick(() => {
         this.user.age++
-        AppStorage.Set<string>("user", JSON.stringify(this.user))
+        AppStorage.set<string>("user", JSON.stringify(this.user))
       })
       Button("返回Index页面").onClick(() => {
         router.back()

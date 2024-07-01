@@ -1,4 +1,4 @@
-AppStorage.SetOrCreate('PropA', 47);
+AppStorage.setOrCreate('PropA', 47);
 let info : PropInterface = {'PropA': 48}
 let localStorage:LocalStorage = new LocalStorage(info);
 

@@ -23,10 +23,14 @@ struct ComponentA {
           })
         Button('bind this')
           .layoutWeight(1)
-          .onClick(this.fun.bind(this)) //不bind，不能访问this.count
+          .onClick(()=>{
+            this.fun()
+          }) //不bind，不能访问this.count
         Button('匿名函数')
           .layoutWeight(1)
-          .onClick(this.fun2.bind(this))
+          .onClick(()=>{
+            this.fun2()
+          })
       }.width('100%')
 
       ChildComponent({
@@ -82,7 +86,9 @@ struct ChildComponent {
             this.fun()
           })
         Button('单击2')
-          .onClick(this.fun2.bind(this))
+          .onClick(()=>{
+            this.fun2()
+          })
       }
     }.borderWidth(1)
   }

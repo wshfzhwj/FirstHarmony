@@ -5,6 +5,7 @@ import DiaryItem from './DiaryItem';
 import hilog from '@ohos.hilog';
 import distributedKVStore from '@ohos.data.distributedKVStore';
 import { DiaryService } from '../../service/DiaryService';
+import { promptAction } from '@kit.ArkUI';
 
 @Entry
 @Component
@@ -23,7 +24,7 @@ struct DiaryIndex {
       let param : ParamMsg = router.getParams() as ParamMsg
       let msg : string = param.msg
       if (msg != null) {
-        prompt.showToast({
+        promptAction.showToast({
           message: msg,
           duration: 3000,
           bottom: '30%'

@@ -92,8 +92,8 @@ struct Gallery2 {
 @Component
 export struct TapImage {
   @State tapColor: Color = Color.Black;
-  private index: number = 0;
-  private uri: Resource | null = null;
+  index: number = 0;
+  uri: Resource | null = null;
 
   onTapIndexChange(colorTag: emitter.EventData) {
     this.tapColor = colorTag.data?.colorTag ? Color.Red : Color.Black
@@ -102,7 +102,7 @@ export struct TapImage {
   aboutToAppear() {
     //定义事件ID
     let innerEvent: emitter.InnerEvent = { eventId: this.index }
-    emitter.on(innerEvent, this.onTapIndexChange.bind(this))
+    emitter.on(innerEvent, this.onTapIndexChange)
   }
 
   build() {

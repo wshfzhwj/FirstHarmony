@@ -1,6 +1,6 @@
 import router from '@ohos.router'
 // 通过getShared接口获取stage共享的LocalStorage实例
-let storage = LocalStorage.GetShared()
+let storage = LocalStorage.getShared()
 @Entry(storage)
 @Component
 struct LocalStorageSharedIndex {

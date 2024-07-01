@@ -1,4 +1,4 @@
-PersistentStorage.PersistProp('aProp', 47);
+PersistentStorage.persistProp('aProp', 47);
 
 @Entry
 @Component

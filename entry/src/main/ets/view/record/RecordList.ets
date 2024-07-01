@@ -66,7 +66,7 @@ export default struct RecordList {
                   }
                   .width('100%')
                   .padding(CommonConstants.SPACE_6)
-                }.swipeAction({ end: this.deleteButton.bind(this) })
+                }.swipeAction({ end: this.deleteButton})
               })
             }
           }

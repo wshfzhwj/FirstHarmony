@@ -1,4 +1,4 @@
-PersistentStorage.PersistProp('money',50)
+PersistentStorage.persistProp('money',50)
 
 @Entry
 @Component
