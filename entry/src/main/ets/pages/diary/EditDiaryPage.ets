@@ -4,6 +4,7 @@ import { Diary } from '../../bean/Diary'
 import distributedKVStore from '@ohos.data.distributedKVStore'
 import { diaryService as API } from '../../service/DiaryService'
 import { WeatherInfo } from './AddDiaryPage'
+import { promptAction } from '@kit.ArkUI'
 
 @Entry
 @Component
@@ -113,7 +114,7 @@ struct EditPage {
     if (this.title.trim() != '' && this.content.trim() != '') {
       return true
     } else {
-      prompt.showToast({
+      promptAction.showToast({
         message: "标题和内容都不能为空",
         duration: 3000,
         bottom: '30%'

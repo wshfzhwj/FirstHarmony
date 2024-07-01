@@ -1,25 +1,23 @@
 import { CommonConstants } from '../../constants/CommonConstants'
 import GroupInfo from '../../model/GroupInfoModel'
 import ItemCategoryModel from '../../model/ItemCategoryModel'
+import RecordItemModel from '../../model/RecordItemModel'
 import RecordItem from '../../model/RecordItemModel'
 import ItemViewModel from '../../viewmodel/ItemViewModel'
 
 @Component
 export default struct ItemList {
-  showPanel: (item: RecordItem) => void = () => {
-  }
+  showPanelFunc: (item: RecordItemModel) => void = () => {}
   @Prop isFood: boolean
 
   build() {
     Tabs() {
       TabContent() {
         this.TabContentBuilder(ItemViewModel.list(this.isFood))
-      }
-      .tabBar('全部')
-
+      }.tabBar('全部')
       ForEach(
         ItemViewModel.listItemGroupByCategory(this.isFood),
-        (group: GroupInfo<ItemCategoryModel, RecordItem>) => {
+        (group: GroupInfo<ItemCategoryModel, RecordItemModel>) => {
           TabContent() {
             this.TabContentBuilder(group.items)
           }
@@ -33,9 +31,9 @@ export default struct ItemList {
   }
 
   @Builder
-  TabContentBuilder(items: RecordItem[]) {
+  TabContentBuilder(items: RecordItemModel[]) {
     List({ space: CommonConstants.SPACE_10 }) {
-      ForEach(items, (item: RecordItem) => {
+      ForEach(items, (item: RecordItemModel) => {
         ListItem() {
           Row({ space: CommonConstants.SPACE_6 }) {
             Image(item.image).width(50)
@@ -55,7 +53,7 @@ export default struct ItemList {
           .width('100%')
           .padding(CommonConstants.SPACE_6)
         }
-        .onClick(() => this.showPanel(item))
+        .onClick(() => this.showPanelFunc(item))
       })
     }
     .width('100%')

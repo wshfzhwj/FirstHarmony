@@ -12,21 +12,20 @@ import NutrientStats from './NutrientStats'
 @Component
 export default struct StatsCard {
   @StorageProp('selectedDate') selectedDate: number = DateUtil.beginTimeOfDay(new Date())
-
   @StorageProp('currentBreakpoint') currentBreakpoint: string = BreakpointConstants.BREAKPOINT_SM
   @Consume
   @Watch('handleRecordsChange')
-  records:RecordVO[]
+  records: RecordVO[]
   @State info: StatsInfo = new StatsInfo()
 
-
-  handleRecordsChange(){
+  handleRecordsChange() {
     this.info = RecordService.calculateStatsInfo(this.records)
   }
 
   controller: CustomDialogController = new CustomDialogController({
     builder: DatePickDialog({ selectedDate: new Date(this.selectedDate) })
   })
+
   build() {
     Column() {
       //日期
@@ -41,16 +40,17 @@ export default struct StatsCard {
       .onClick(() => {
         this.controller.open()
       })
+
       //统计信息
       Swiper() {
         //2.1热量统计
-        CalorieStats({intake: this.info.intake,expend:this.info.expend})
-        NutrientStats({carbon: this.info.carbon,protein: this.info.protein,fat: this.info.fat})
+        CalorieStats({ intake: this.info.intake, expend: this.info.expend })
+        NutrientStats({ carbon: this.info.carbon, protein: this.info.protein, fat: this.info.fat })
       }
       .width('100%')
       .backgroundColor(Color.White)
       .borderRadius(CommonConstants.DEFAULT_18)
-      .indicatorStyle({ selectedColor: $r('app.color.primary_color') })
+      .indicator(new DotIndicator().selectedColor($r('app.color.primary_color')))
       .displayCount(new BreakpointType({
         sm: 1,
         md: 1,

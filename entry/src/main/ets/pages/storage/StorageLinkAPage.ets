@@ -12,7 +12,7 @@ struct StorageLinkAPage {
       Text('当前页面是 A Page').fontSize(30)
       Button(`${this.label}`)
         .onClick(() => {
-          let temp = AppStorage.Get<number>('count1')
+          let temp = AppStorage.get<number>('count1')
           AppStorage.set<number>('count1', temp! + 1)
           this.indexCount2++
           console.log("AppStorage ---" + AppStorage.get<number>('count1')!.toString())

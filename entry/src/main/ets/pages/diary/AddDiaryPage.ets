@@ -4,6 +4,7 @@ import { Diary } from '../../bean/Diary'
 import systemDateTime from '@ohos.systemDateTime';
 // import distributedKVStore from '@ohos.data.distributedKVStore';
 import { diaryService as API } from '../../service/DiaryService';
+import { promptAction } from '@kit.ArkUI';
 
 export class WeatherInfo {
   value: string = ''
@@ -21,9 +22,7 @@ struct AddPage {
   private diaryAPI = API
 
   onPageShow() {
-    systemDateTime.getDate().then((result) => {
-      this.date = result.toDateString()
-    })
+    this.date = new Date().toDateString()
     this.weather = this.wArr[0].value
     this.title = ""
     this.content = ""
@@ -117,7 +116,7 @@ struct AddPage {
     if (this.title.trim() != '' && this.content.trim() != '') {
       return true
     } else {
-      prompt.showToast({
+      promptAction.showToast({
         message: "标题和内容都不能为空",
         duration: 3000,
         bottom: '30%'

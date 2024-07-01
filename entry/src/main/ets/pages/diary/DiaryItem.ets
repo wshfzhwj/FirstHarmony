@@ -2,6 +2,7 @@ import router from '@ohos.router'
 import prompt from '@ohos.prompt'
 import { Diary } from '../../bean/Diary'
 import { DiaryService} from '../../service/DiaryService'
+import { promptAction } from '@kit.ArkUI'
 
 @Component
 export default struct DiaryItem {
@@ -44,7 +45,7 @@ export default struct DiaryItem {
     .borderRadius(16)
     .backgroundColor(Color.White)
     .onClick(() => {
-      router.push({
+      router.pushUrl({
         url: 'pages/edit',
         params: {
           diary: this.diary
@@ -55,7 +56,7 @@ export default struct DiaryItem {
 
   delete() {
     this.diaryAPI.deleteByKID(this.diary!!.date, (result:string) => {
-      prompt.showToast({ message: result, duration: 3000, bottom: '30%' });
+      promptAction.showToast({ message: result, duration: 3000, bottom: '30%' });
       if (result === "删除成功！") {
         let index = this.listData.indexOf(this.diary!!)
         if (index >= 0) {

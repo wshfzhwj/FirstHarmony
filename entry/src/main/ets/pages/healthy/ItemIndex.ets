@@ -21,15 +21,49 @@ struct ItemIndex {
   @State amount: number = 1
   @State value: string = ''
   @State showPanel: boolean = false
-  @State item: RecordItem | null= null
+  @State item: RecordItem | null = null
   @State type: RecordTypeModel = RecordTypes[0]
   @State isFood: boolean = true
 
   onPanelShow(item: RecordItemModel) {
+    console.log('ItemIndex', 'onPanelShow')
     this.showPanel = true
     this.value = ''
     this.amount = 1
     this.item = item
+    console.log('ItemIndex', 'onPanelShow showPanel = ' + this.showPanel)
+  }
+
+  @Builder
+  mySheet() {
+    Column() {
+      ItemPanelHeader()
+      if (this.item) {
+        ItemCard({ amount: this.amount, item: $item })
+      }
+      NumberKeyboard({ amount: $amount, value: $value })
+      Row({ space: CommonConstants.SPACE_8 }) {
+        Button('取消')
+          .width(120)
+          .backgroundColor($r('app.color.light_gray'))
+          .type(ButtonType.Normal)
+          .borderRadius(6)
+          .onClick(() => this.showPanel = false)
+        Button('提交')
+          .width(120)
+          .backgroundColor($r('app.color.primary_color'))
+          .type(ButtonType.Normal)
+          .borderRadius(6)
+          .onClick(() => {
+            RecordService.insert(this.type.id, this.item!!.id, this.amount).then(() => {
+              this.showPanel = false
+            })
+          })
+      }.margin({ top: 10 })
+    }.width('100%')
+    .height('100%')
+    .backgroundColor(Color.White)
+
   }
 
   onPageShow() {
@@ -43,46 +77,25 @@ struct ItemIndex {
       //1.头部导航
       this.Header()
       //2.列表
-      ItemList({ showPanel: this.onPanelShow.bind(this), isFood: this.isFood })
+      ItemList({
+        showPanelFunc: (item: RecordItemModel) => {
+          this.onPanelShow(item)
+        }, isFood: this.isFood
+      })
         .layoutWeight(1)
-      //底部面板
-      Panel(this.showPanel) {
-        ItemPanelHeader()
-        if (this.item) {
-          ItemCard({ amount: this.amount, item: $item })
-        }
-        NumberKeyboard({ amount: $amount, value: $value })
-        Row({ space: CommonConstants.SPACE_8 }) {
-          Button('取消')
-            .width(120)
-            .backgroundColor($r('app.color.light_gray'))
-            .type(ButtonType.Normal)
-            .borderRadius(6)
-            .onClick(() => this.showPanel = false)
-          Button('提交')
-            .width(120)
-            .backgroundColor($r('app.color.primary_color'))
-            .type(ButtonType.Normal)
-            .borderRadius(6)
-            .onClick(() => {
-              RecordService.insert(this.type.id, this.item!!.id, this.amount).then(() => {
-                this.showPanel = false
-              })
-            })
-        }.margin({ top: 10 })
-      }
-      .mode(PanelMode.Full)
-      .dragBar(false)
-      .backgroundMask($r('app.color.light_gray'))
-      .backgroundColor(Color.White)
-      //键盘
-
+        .bindSheet(this.showPanel, this.mySheet(), {
+          dragBar: false,
+          backgroundColor: (Color.White),
+          maskColor: $r('app.color.light_gray')
+        })
     }
     .width('100%')
     .height('100%')
+
   }
 
-  @Builder Header() {
+  @Builder
+  Header() {
     Row() {
       Image($r('app.media.ic_public_back'))
         .width(24)

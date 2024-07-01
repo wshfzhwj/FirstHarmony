@@ -55,6 +55,7 @@ export default class EntryAbility extends UIAbility {
     //   console.error('Failed to enable the listener for window stage event changes. Cause:' + JSON.stringify(exception));
     // }
     windowStage.loadContent('pages/WelcomeIndex', (err, data) => {
+    // windowStage.loadContent('pages/demo/ComponentA', (err, data) => {
     // windowStage.loadContent('pages/MainIndex', (err, data) => {
     // windowStage.loadContent('pages/storage/LocalStorageSharedIndex',this.storage, (err, data) => {
       if (err.code) {

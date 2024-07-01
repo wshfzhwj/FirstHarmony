@@ -37,6 +37,22 @@
           "when": "always"
         }
       },
+      {
+        "name": "ohos.permission.ACCESS_BIOMETRIC",
+        "reason": "$string:app_name",
+        "usedScene": {
+          "when": "always"
+        },
+
+
+      },
+      {
+        "name": "ohos.permission.DISTRIBUTED_DATASYNC",
+        "reason": "$string:app_name",
+        "usedScene": {
+          "when": "always"
+        },
+      },
 //      {
 //        "name": "ohos.permission.SYSTEM_FLOAT_WINDOW",
 //        "reason": "$string:reason",
