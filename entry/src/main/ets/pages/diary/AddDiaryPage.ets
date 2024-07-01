@@ -3,7 +3,11 @@ import prompt from '@ohos.prompt'
 import { Diary } from '../../bean/Diary'
 import systemDateTime from '@ohos.systemDateTime';
 // import distributedKVStore from '@ohos.data.distributedKVStore';
-import { diaryAPI as API} from '../../model/DiaryAPI';
+import { diaryService as API } from '../../service/DiaryService';
+
+export class WeatherInfo {
+  value: string = ''
+}
 
 @Entry
 @Component
@@ -13,7 +17,7 @@ struct AddPage {
   @State weather: string = ''
   @State title: string = ''
   @State content: string = ''
-  private wArr = [{ value: '晴' }, { value: '阴' }, { value: '雨' }, { value: '雪' }]
+  private wArr: WeatherInfo[] = [{ value: '雪' }, { value: '阴' }, { value: '雨' }, { value: '雪' }]
   private diaryAPI = API
 
   onPageShow() {
@@ -98,8 +102,8 @@ struct AddPage {
       return
     }
     let d = new Diary(this.date, this.title, this.weather, this.content)
-    this.diaryAPI.add(d, (result) => {
-      let option = {
+    this.diaryAPI.add(d, (result: Function) => {
+      let option: router.RouterOptions = {
         url: "pages/diary/diaryIndex",
         params: {
           msg: result,
@@ -121,4 +125,8 @@ struct AddPage {
       return false
     }
   }
+}
+
+class ResultInfo {
+  msg: string = ''
 }

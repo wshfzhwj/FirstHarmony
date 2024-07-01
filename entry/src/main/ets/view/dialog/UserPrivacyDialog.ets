@@ -1,8 +1,8 @@
 @CustomDialog
 export default struct UserPrivacyDialog {
   controller: CustomDialogController
-  confirm: () => void
-  cancel: () => void
+  confirm: () => void = ()=>{}
+  cancel: () => void = ()=>{}
 
   build() {
     Column({ space: 10 }) {

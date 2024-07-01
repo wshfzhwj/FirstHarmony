@@ -1,24 +1,25 @@
 import { CommonConstants } from '../../constants/CommonConstants'
-import ItemModel from '../../model/ItemModel'
-import GroupInfo from '../../viewmodel/GroupInfo'
-import ItemCategory from '../../viewmodel/ItemCategory'
-import RecordItem from '../../viewmodel/RecordItem'
+import GroupInfo from '../../model/GroupInfoModel'
+import ItemCategoryModel from '../../model/ItemCategoryModel'
+import RecordItem from '../../model/RecordItemModel'
+import ItemViewModel from '../../viewmodel/ItemViewModel'
 
 @Component
 export default struct ItemList {
-  showPanel: (item: RecordItem) => void
+  showPanel: (item: RecordItem) => void = () => {
+  }
   @Prop isFood: boolean
 
   build() {
     Tabs() {
       TabContent() {
-        this.TabContentBuilder(ItemModel.list(this.isFood))
+        this.TabContentBuilder(ItemViewModel.list(this.isFood))
       }
       .tabBar('全部')
 
       ForEach(
-        ItemModel.listItemGroupByCategory(this.isFood),
-        (group: GroupInfo<ItemCategory, RecordItem>) => {
+        ItemViewModel.listItemGroupByCategory(this.isFood),
+        (group: GroupInfo<ItemCategoryModel, RecordItem>) => {
           TabContent() {
             this.TabContentBuilder(group.items)
           }
@@ -31,7 +32,8 @@ export default struct ItemList {
     .barMode(BarMode.Scrollable)
   }
 
-  @Builder TabContentBuilder(items: RecordItem[]) {
+  @Builder
+  TabContentBuilder(items: RecordItem[]) {
     List({ space: CommonConstants.SPACE_10 }) {
       ForEach(items, (item: RecordItem) => {
         ListItem() {

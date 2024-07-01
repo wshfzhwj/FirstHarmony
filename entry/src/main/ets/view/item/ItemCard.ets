@@ -1,10 +1,15 @@
 import { CommonConstants } from '../../constants/CommonConstants'
-import RecordItem from '../../viewmodel/RecordItem'
+import RecordItemModel from '../../model/RecordItemModel'
+
+interface GeneratedTypeLiteralInterface_1 {
+  label: string;
+  value: number;
+}
 
 @Component
 export default struct ItemCard {
   @Prop amount: number
-  @Link item: RecordItem
+  @Link item: RecordItemModel
 
   build() {
     Column({ space: CommonConstants.SPACE_8 }) {
@@ -41,7 +46,7 @@ export default struct ItemCard {
     }
   }
 
-  @Builder NutrientInfo($$:{label: string, value: number}) {
+  @Builder NutrientInfo($$: GeneratedTypeLiteralInterface_1) {
     Column({ space: CommonConstants.SPACE_8 }) {
       Text($$.label).fontSize(14).fontColor($r('app.color.light_gray'))
       Text(($$.value * this.amount).toFixed(1)).fontSize(18).fontWeight(CommonConstants.FONT_WEIGHT_700)

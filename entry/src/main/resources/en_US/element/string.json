@@ -119,6 +119,10 @@
     {
       "name": "tab_weather",
       "value": "weather"
+    },
+    {
+      "name": "reason",
+      "value": "popupWindow"
     }
   ]
 }

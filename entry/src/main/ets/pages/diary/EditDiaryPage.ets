@@ -2,7 +2,8 @@ import router from '@ohos.router'
 import prompt from '@ohos.prompt'
 import { Diary } from '../../bean/Diary'
 import distributedKVStore from '@ohos.data.distributedKVStore'
-import { diaryAPI as API } from '../../model/DiaryAPI'
+import { diaryService as API } from '../../service/DiaryService'
+import { WeatherInfo } from './AddDiaryPage'
 
 @Entry
 @Component
@@ -12,15 +13,16 @@ struct EditPage {
   @State weather: string = ''
   @State title: string = ''
   @State content: string = ''
-  private wArr = [{ value: '晴' }, { value: '阴' }, { value: '雨' }, { value: '雪' }]
+  private wArr: WeatherInfo[] = [{ value: '晴' }, { value: '阴' }, { value: '雨' }, { value: '雪' }]
   private diaryAPI = API;
-  private diary: Diary = router.getParams()['diary']
+  private param: ParamDiary = router.getParams() as ParamDiary
+  private diary: Diary = this.param.diary
 
   onPageShow() {
-    this.date = this.diary.date
-    this.weather = this.diary.weather
-    this.title = this.diary.title
-    this.content = this.diary.content
+    this.date = this.diary!!.date
+    this.weather = this.diary!!.weather
+    this.title = this.diary!!.title
+    this.content = this.diary!!.content
   }
 
   getWeatherSelected(): number {
@@ -96,8 +98,8 @@ struct EditPage {
       return
     }
     let d = new Diary(this.date, this.title, this.weather, this.content)
-    this.diaryAPI.update(d, (result) => {
-      let option = {
+    this.diaryAPI.update(d, (result: Function) => {
+      let option: router.RouterOptions = {
         url: "pages/diary/diaryIndex",
         params: {
           msg: result,
@@ -119,4 +121,8 @@ struct EditPage {
       return false
     }
   }
+}
+
+class ParamDiary {
+  diary: Diary = new Diary('','','','')
 }

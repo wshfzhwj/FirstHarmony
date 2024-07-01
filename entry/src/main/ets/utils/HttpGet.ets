@@ -4,9 +4,9 @@
 import http from '@ohos.net.http';
 import hilog from '@ohos.hilog';
 import { WanAndroidBean } from '../bean/WanAndroidBean';
+import { BusinessError } from '@kit.BasicServicesKit';
 
 export class HttpGet {
-
   //正确返回
   async doGet4() {
     let httpRequest = http.createHttp();
@@ -23,7 +23,7 @@ export class HttpGet {
 
 
   async doGet5() {
-    let model: WanAndroidBean
+    let model: WanAndroidBean | null = null
     let httpRequest = http.createHttp();
     httpRequest.on('headersReceive', (header) => {
       console.info('header: ' + JSON.stringify(header));
@@ -35,7 +35,7 @@ export class HttpGet {
         console.log(`----------------------success = ` + data.result.toString())
         model = JSON.parse(data.result.toString())
       }
-    }).catch((err) => {
+    }).catch((err: BusinessError) => {
       console.log("--------------------failed")
       hilog.info(0x0000, 'testTag', 'error: ' + JSON.stringify(err))
       httpRequest.destroy()

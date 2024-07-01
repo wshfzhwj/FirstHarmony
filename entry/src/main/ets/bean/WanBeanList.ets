@@ -5,5 +5,5 @@ export class WanBeanList {
   size: number = 0;
   total: number = 0;
   pageCount: number = 0;
-  datas: Array<WanBeanItem>
+  datas: Array<WanBeanItem> = []
 }

@@ -1,7 +1,7 @@
 import reminderAgentManager from '@ohos.reminderAgentManager'
 let timer : reminderAgentManager.ReminderRequestTimer = {
   reminderType:reminderAgentManager.ReminderType.REMINDER_TYPE_TIMER,
-  triggerTimeInSeconds:30,
+  triggerTimeInSeconds:3,
   actionButton:[
     {
       title:'关闭',

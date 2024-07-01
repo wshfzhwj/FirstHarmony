@@ -119,6 +119,10 @@
     {
       "name": "strength",
       "value": "strength"
+    },
+    {
+      "name": "reason",
+      "value": "popupWindow"
     }
   ]
 }

@@ -1,9 +1,8 @@
-import RecordItem from '../viewmodel/RecordItem'
-import ItemCategory from '../viewmodel/ItemCategory'
-import { FoodCategories, FoodCategoryEnum, WorkoutCategories, WorkoutCategoryEnum } from './ItemCategoryModel'
-import GroupInfo from '../viewmodel/GroupInfo'
+import RecordItem from './RecordItemModel'
+import {FoodCategoryEnum, WorkoutCategoryEnum } from './ItemCategory'
+import RecordItemModel from './RecordItemModel'
 
-const foods: RecordItem[] = [
+export const foods: RecordItemModel[] = [
   new RecordItem(0, '米饭',$r('app.media.rice'),FoodCategoryEnum.STAPLE, '碗',  209, 46.6, 4.7, 0.5),
   new RecordItem(1, '馒头',$r('app.media.steamed_bun'),FoodCategoryEnum.STAPLE, '个',  114, 24.0, 3.6, 0.6),
   new RecordItem(2, '面包',$r('app.media.bun'),FoodCategoryEnum.STAPLE, '个',  188, 35.2, 5.0, 3.1),
@@ -29,7 +28,7 @@ const foods: RecordItem[] = [
   new RecordItem(22, '豆浆',$r("app.media.soybean_milk"),FoodCategoryEnum.OTHER, '毫升',  0.31, 0.012, 0.030, 0.016),
 ]
 
-const workouts: RecordItem[] = [
+export const workouts: RecordItemModel[] = [
   new RecordItem(10000, '散步',$r('app.media.ic_walk'), WorkoutCategoryEnum.WALKING, '小时', 111),
   new RecordItem(10001, '快走',$r('app.media.ic_walk'), WorkoutCategoryEnum.WALKING, '小时',  343),
   new RecordItem(10002, '慢跑',$r('app.media.ic_running'), WorkoutCategoryEnum.RUNNING, '小时',  472),
@@ -50,29 +49,4 @@ const workouts: RecordItem[] = [
   new RecordItem(10017, '仰卧起坐',$r("app.media.ic_sit_up"), WorkoutCategoryEnum.STRENGTH, '小时',  515),
 ]
 
-class ItemModel{
 
-  getById(id: number, isFood: boolean = true){
-    return isFood ? foods[id] : workouts[id - 10000]
-  }
-
-  list(isFood: boolean = true): RecordItem[]{
-    return isFood ? foods : workouts
-  }
-
-  listItemGroupByCategory(isFood: boolean = true){
-    // 1.判断要处理的是食物还是运动
-    let categories = isFood ? FoodCategories : WorkoutCategories
-    let items = isFood ? foods: workouts
-    // 2.创建空的分组
-    let groups = categories.map(itemCategory => new GroupInfo(itemCategory, []))
-    // 3.遍历记录项列表，将食物添加到对应的分组
-    items.forEach(item => groups[item.categoryId].items.push(item))
-    // 4.返回结果
-    return groups
-  }
-}
-
-let itemModel = new ItemModel()
-
-export default itemModel as ItemModel

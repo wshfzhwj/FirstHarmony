@@ -1,19 +1,19 @@
-export default class GroupInfo<TYPE, ELEMENT> {
+export default class GroupInfoModel<T, E> {
   /**
    * 分组类型
    */
-  type: TYPE
+  type: T
   /**
    * 组内数据集合
    */
-  items: ELEMENT[]
+  items: E[]
 
   /**
    * 组内记录的总热量
    */
   calorie: number = 0
 
-  constructor(type: TYPE, items: ELEMENT[]) {
+  constructor(type: T, items: E[]) {
     this.type = type
     this.items = items
   }

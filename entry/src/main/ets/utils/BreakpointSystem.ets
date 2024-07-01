@@ -26,7 +26,7 @@ export default class BreakpointSystem{
   }
 
   updateCurrentBreakpoint(breakpoint: string){
-    AppStorage.SetOrCreate(BreakpointConstants.CURRENT_BREAKPOINT, breakpoint)
+    AppStorage.setOrCreate(BreakpointConstants.CURRENT_BREAKPOINT, breakpoint)
   }
 
   register(){

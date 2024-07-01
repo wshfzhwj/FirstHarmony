@@ -1,9 +1,11 @@
 import router from '@ohos.router'
 import { CommonConstants } from '../../constants/CommonConstants'
 import RecordService from '../../service/RecordService'
-import GroupInfo from '../../viewmodel/GroupInfo'
-import RecordType from '../../viewmodel/RecordType'
-import RecordVO from '../../viewmodel/RecordVO'
+import GroupInfo from '../../model/GroupInfoModel'
+import RecordType from '../../model/RecordTypeModel'
+import RecordVO from '../../model/RecordModel'
+import RecordTypeModel from '../../model/RecordTypeModel'
+import RecordModel from '../../model/RecordModel'
 
 @Extend(Text) function grayText() {
   .fontSize(14)
@@ -23,7 +25,7 @@ export default struct RecordList {
 
   build() {
     List({ space: CommonConstants.SPACE_10 }) {
-      ForEach(this.groups, (group: GroupInfo<RecordType, RecordVO>) => {
+      ForEach(this.groups, (group: GroupInfo<RecordTypeModel, RecordModel>) => {
         ListItem() {
           Column() {
             //分组标题
@@ -40,7 +42,7 @@ export default struct RecordList {
             }.width('100%')
             .onClick(() => {
               router.pushUrl({
-                url: 'pages/ItemIndex',
+                url: 'pages/healthy/ItemIndex',
                 params: {
                   type: group.type
                 }
@@ -48,7 +50,7 @@ export default struct RecordList {
             })
             //组内记录列表
             List({ space: CommonConstants.SPACE_4 }) {
-              ForEach(group.items, (item: RecordVO) => {
+              ForEach(group.items, (item: RecordModel) => {
                 ListItem() {
                   Row({ space: CommonConstants.SPACE_4 }) {
                     Image(item.recordItem.image).width(50)

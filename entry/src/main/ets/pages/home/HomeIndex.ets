@@ -2,25 +2,22 @@ import router from '@ohos.router'
 import systemDateTime from '@ohos.systemDateTime'
 
 @Component
-export struct HomeIndex{
+export struct HomeIndex {
   routesSettings: RouteSetting[] = [
     new RouteSetting('StorageLinkAPage', 'pages/storage/StorageLinkAPage'),
-    new RouteSetting('Diary', 'pages/diary/DiaryIndex', { msg: "hello world", id: "1" }),
-    new RouteSetting('KvManagerPage', 'pages/KvManagerIndex'),
+    new RouteSetting('Diary', 'pages/diary/DiaryIndex', new RouteSettingParam("hello world", 1)),
+    new RouteSetting('KvManagerPage', 'pages/kv/KVStoreIndex'),
     new RouteSetting('NetworkPage', 'pages/NetworkIndex'),
   ];
-
-  @State date: string = undefined
+  @State date: string = ""
 
   onPageShow() {
-    if (this.date == undefined) {
-      systemDateTime.getDate().then((result) => {
-        this.date = result.toDateString()
-      })
+    if (this.date === "") {
+      this.date = new Date().toDateString()
     }
   }
 
-  build(){
+  build() {
     Column({ space: 5 }) {
       Text(`页面列表`)
         .fontSize(30)
@@ -47,13 +44,15 @@ export struct HomeIndex{
     .padding({ left: 20, right: 20 })
   }
 
-  @Styles BtnStyle() {
+  @Styles
+  BtnStyle() {
     .padding({ left: 20, right: 20 })
     .backgroundColor('#678')
     .borderRadius(50)
   }
 
-  @Styles TextBorder(){
+  @Styles
+  TextBorder(){
     .border({
       style: BorderStyle.Solid,
       width: 1,
@@ -66,9 +65,9 @@ export struct HomeIndex{
 class RouteSetting {
   title: string
   url: string
-  params: Object
+  params?: RouteSettingParam
 
-  constructor(title: string, url: string, params?: Object) {
+  constructor(title: string, url: string, params?: RouteSettingParam) {
     this.title = title
     this.url = url
     this.params = params
@@ -76,17 +75,18 @@ class RouteSetting {
 }
 
 
+class RouteSettingParam {
+  msg: string
+  id: number
 
-class DataModelInfo {
-  age: number;
+  constructor(msg: string, id: number) {
+    this.msg = msg
+    this.id = id
+  }
 }
 
-class DataModel {
-  id: number;
-  info: DataModelInfo;
-}
-
-@Extend(Button) function btnKvStyle() {
+@Extend(Button)
+function btnKvStyle() {
   .width('100%')
   .height(60)
   .fontSize(30)

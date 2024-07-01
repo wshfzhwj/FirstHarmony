@@ -1,12 +1,12 @@
 import router from '@ohos.router'
 import prompt from '@ohos.prompt'
 import { Diary } from '../../bean/Diary'
-import { DiaryAPI } from '../../model/DiaryAPI'
+import { DiaryService} from '../../service/DiaryService'
 
 @Component
 export default struct DiaryItem {
   @State diary: Diary | undefined = undefined
-  @Link diaryAPI: DiaryAPI
+  @Link diaryAPI: DiaryService
   @Link listData: Diary[]
   @Link count: number
 
@@ -16,12 +16,12 @@ export default struct DiaryItem {
         .size({ width: 25, height: 25 })
         .objectFit(ImageFit.Contain)
       Column() {
-        Text(this.diary.title)
+        Text(this.diary!!.title)
           .fontColor(Color.Black)
           .fontSize(25)
           .maxLines(1)
           .textOverflow({ overflow: TextOverflow.Ellipsis })
-        Text(this.diary.content)
+        Text(this.diary!!.content)
           .fontColor(Color.Gray)
           .margin({ top: 10 })
           .fontSize(20)
@@ -54,10 +54,10 @@ export default struct DiaryItem {
   }
 
   delete() {
-    this.diaryAPI.deleteByKID(this.diary.date, (result) => {
+    this.diaryAPI.deleteByKID(this.diary!!.date, (result:string) => {
       prompt.showToast({ message: result, duration: 3000, bottom: '30%' });
-      if (result == "删除成功！") {
-        let index = this.listData.indexOf(this.diary)
+      if (result === "删除成功！") {
+        let index = this.listData.indexOf(this.diary!!)
         if (index >= 0) {
           this.listData.splice(index, 1)
           this.count = this.listData.length

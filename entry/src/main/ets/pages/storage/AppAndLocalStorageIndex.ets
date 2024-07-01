@@ -1,5 +1,6 @@
 AppStorage.SetOrCreate('PropA', 47);
-let localStorage = new LocalStorage({ 'PropA': 48 });
+let info : PropInterface = {'PropA': 48}
+let localStorage:LocalStorage = new LocalStorage(info);
 
 @Entry(localStorage)
 @Component
@@ -15,4 +16,8 @@ struct CompA {
         .onClick(() => this.localStoreLink += 1)
     }
   }
+}
+
+interface PropInterface{
+  PropA:number
 }

@@ -1,7 +1,7 @@
 /**
  * 饮食记录中的记录项，可以是食物或运动
  */
-export default class RecordItem{
+export default class RecordItemModel{
   /**
    * id
    */

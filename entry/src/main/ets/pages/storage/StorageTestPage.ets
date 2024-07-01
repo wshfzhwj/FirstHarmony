@@ -40,7 +40,8 @@ class ViewData {
 @Entry
 @Component
 struct Gallery2 {
-  dataList: Array<ViewData> = [new ViewData('flower', $r('app.media.icon')), new ViewData('OMG', $r('app.media.icon')), new ViewData('OMG', $r('app.media.icon'))]
+  dataList: Array<ViewData> = [new ViewData('flower', $r('app.media.icon')), new ViewData('OMG', $r('app.media.icon')),
+    new ViewData('OMG', $r('app.media.icon'))]
   scroller: Scroller = new Scroller()
   private preIndex: number = -1
 
@@ -58,9 +59,9 @@ struct Gallery2 {
             if (this.preIndex === item.id) {
               return
             }
-            var innerEvent = { eventId: item.id }
+            let innerEvent: emitter.InnerEvent = { eventId: item.id }
             // 选中态：黑变红
-            var eventData = {
+            let eventData: emitter.EventData = {
               data: {
                 "colorTag": 1
               }
@@ -69,9 +70,9 @@ struct Gallery2 {
 
             if (this.preIndex != -1) {
               console.info(`preIndex: ${this.preIndex}, index: ${item.id}, black`)
-              var innerEvent = { eventId: this.preIndex }
+              let innerEvent: emitter.InnerEvent = { eventId: this.preIndex }
               // 取消选中态：红变黑
-              var eventData = {
+              let eventData: emitter.EventData = {
                 data: {
                   "colorTag": 0
                 }
@@ -91,16 +92,16 @@ struct Gallery2 {
 @Component
 export struct TapImage {
   @State tapColor: Color = Color.Black;
-  private index: number;
-  private uri: Resource;
+  private index: number = 0;
+  private uri: Resource | null = null;
 
   onTapIndexChange(colorTag: emitter.EventData) {
-    this.tapColor = colorTag.data.colorTag ? Color.Red : Color.Black
+    this.tapColor = colorTag.data?.colorTag ? Color.Red : Color.Black
   }
 
   aboutToAppear() {
     //定义事件ID
-    var innerEvent = { eventId: this.index }
+    let innerEvent: emitter.InnerEvent = { eventId: this.index }
     emitter.on(innerEvent, this.onTapIndexChange.bind(this))
   }
 

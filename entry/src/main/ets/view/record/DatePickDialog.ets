@@ -13,8 +13,8 @@ export default struct DatePickDialog {
         end: new Date('2024-06-02'),
         selected: this.selectedDate
       })
-        .onChange((value: DatePickerResult) => {
-          this.selectedDate.setFullYear(value.year, value.month, value.day)
+        .onDateChange((value: Date) => {
+          this.selectedDate.setFullYear(value.getFullYear()!, value.getMonth(), value.getDay())
         })
       //按钮
       Row({ space: CommonConstants.SPACE_12 }) {
@@ -29,7 +29,7 @@ export default struct DatePickDialog {
           .backgroundColor($r('app.color.primary_color'))
           .onClick(() => {
             //保存日期到全局
-            AppStorage.SetOrCreate('selectedDate', this.selectedDate.getTime())
+            AppStorage.setOrCreate('selectedDate', this.selectedDate.getTime())
             //关闭窗口
             this.controller.close()
           })

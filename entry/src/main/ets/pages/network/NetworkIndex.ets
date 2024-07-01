@@ -25,7 +25,7 @@ struct NetworkIndex {
     // })
 
     AxiosHttpGet.getAuthorList().then(bean => {
-      bean.data.datas.forEach((item: WanBeanItem) => {
+      bean.data!!.datas.forEach((item: WanBeanItem) => {
         this.isLoading = false
         this.wanBeanList.push(item)
       })
