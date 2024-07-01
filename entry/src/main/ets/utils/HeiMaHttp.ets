@@ -3,6 +3,7 @@
  */
 import http from '@ohos.net.http';
 import { WanAndroidBean } from '../bean/WanAndroidBean';
+import { BusinessError } from '@kit.BasicServicesKit';
 
 class HeiMaHttp {
   baseUrl: string = 'https://www.wanandroid.com'
@@ -27,7 +28,7 @@ class HeiMaHttp {
             reject('查询失败')
           }
         })
-        .catch((err) => {
+        .catch((err:BusinessError) => {
           console.log('--------------------HeiMaHttp catch', JSON.stringify(err))
           reject('查询失败')
         });

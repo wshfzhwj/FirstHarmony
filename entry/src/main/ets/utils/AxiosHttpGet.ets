@@ -1,5 +1,6 @@
-import  axios from '@ohos/axios';
+import  axios, { AxiosResponse } from '@ohos/axios';
 import { WanAndroidBean } from '../bean/WanAndroidBean';
+import { BusinessError } from '@kit.BasicServicesKit';
 
 class AxiosHttpGet {
   baseUrl: string = 'https://www.wanandroid.com'
@@ -10,7 +11,7 @@ class AxiosHttpGet {
     console.log('------------AxiosHttpGet----------url = ' + url)
     return new Promise((resolve, reject) => {
       axios.get(url)
-        .then(response => {
+        .then((response:AxiosResponse) => {
           console.log('----------------------AxiosHttpGet then')
           if (response.status === 200 ) {
             console.log('----------------------AxiosHttpGet success ')
@@ -20,8 +21,8 @@ class AxiosHttpGet {
             reject('查询失败')
           }
         })
-        .catch(error => {
-          console.log('--------------------AxiosHttpGet catch', error)
+        .catch((err:BusinessError) => {
+          console.log('--------------------AxiosHttpGet catch', err)
           reject('查询失败')
         })
     })

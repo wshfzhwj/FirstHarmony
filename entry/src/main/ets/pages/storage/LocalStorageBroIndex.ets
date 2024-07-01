@@ -1,4 +1,6 @@
-let storage2 = new LocalStorage({ countStorage: 1 });
+import { StorageBean } from '../../bean/StorageBean';
+
+let storage2 = new LocalStorage(new StorageBean(1));
 
 @Component
 struct BroChild {
@@ -44,7 +46,7 @@ struct Parent {
           .width(50).height(60).fontSize(12)
         Text(`countStorage ${this.playCount} incr by 1`)
           .onClick(() => {
-            storage2.set<number>('countStorage', 1 + storage2.get<number>('countStorage'));
+            storage2.set<number>('countStorage', 1 + storage2.get<number>('countStorage')!!);
           })
           .width(250).height(60).fontSize(12)
       }.width(300).height(60)

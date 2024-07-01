@@ -1,7 +1,7 @@
 import common from '@ohos.app.ability.common'
 import UserPrivacyDialog from '../view/dialog/UserPrivacyDialog'
 import PreferenceUtil from '../utils/PreferenceUtil'
-import router from '@ohos.router'
+import router from '@ohos.router';
 
 const PREF_KEY = 'userPrivacyKey'
 
@@ -11,8 +11,8 @@ struct WelcomePage {
   context = getContext(this) as common.UIAbilityContext
   controller: CustomDialogController = new CustomDialogController({
     builder: UserPrivacyDialog({
-      confirm: () => this.onConfirm(),
-      cancel: () => this.exitApp()
+      confirm: (): void => this.onConfirm(),
+      cancel: (): void => this.exitApp()
     })
   })
 
@@ -33,6 +33,12 @@ struct WelcomePage {
     setTimeout(() => {
       router.replaceUrl({
         url: 'pages/MainIndex'
+      }, router.RouterMode.Standard, (err) => {
+        if (err) {
+          console.error(`Invoke replaceUrl failed, code is ${err.code}, message is ${err.message}`);
+          return;
+        }
+        console.info('Invoke replaceUrl succeeded.');
       })
     }, 500)
   }

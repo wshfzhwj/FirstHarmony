@@ -1,4 +1,6 @@
-let storage = new LocalStorage({ name: 'Tom' })
+import { InnerBean } from '../../bean/InnerBean'
+
+let storage = new LocalStorage(new InnerBean('Tom'))
 
 @Entry(storage)
 @Component

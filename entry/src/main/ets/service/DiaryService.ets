@@ -1,14 +1,15 @@
 import hilog from '@ohos.hilog'
 import distributedKVStore from '@ohos.data.distributedKVStore'
 import { Diary } from '../bean/Diary'
-import { DiaryKV } from './DiaryKV'
+import { DiaryKVStore } from '../utils/DiaryKVStore'
 
-export class DiaryAPI {
-  diaryKV = new DiaryKV
+export class DiaryService {
+  diaryKV = new DiaryKVStore
   keyPrefix = 'k'
 
   init() {
-    this.diaryKV.initKvStore()
+    this.diaryKV.initKVManager()
+    this.diaryKV.initKVStore()
   }
 
   add(diary: Diary, callback: Function) {
@@ -16,14 +17,14 @@ export class DiaryAPI {
     const VALUE = diary.toJSONString();
 
     try {
-      this.diaryKV.kvStore.put(KEY, VALUE, function (err, data) {
+      this.diaryKV.kvStore!!.put(KEY, VALUE, (err, data) => {
         if (err != undefined) {
           console.log(`put err: ${err}`);
-          callback("添加日记失败！")
+          callback("添加日记失败！");
           return;
         }
         console.log(`put success ${data}`);
-        callback("添加日记成功！")
+        callback("添加日记成功！");
       });
 
     } catch (e) {
@@ -35,29 +36,29 @@ export class DiaryAPI {
 
   queryAll(callback: Function) {
     hilog.info(0x0001, `failed %{public}%s`, 'queryAll')
-    let promise = this.diaryKV.kvStore.getEntries(this.keyPrefix)
+    let promise = this.diaryKV.kvStore!!.getEntries(this.keyPrefix)
     let arr = []
     if (promise != null) {
       promise.then((data) => {
         hilog.info(0x0001, 'failed %{public}%s', 'queryAll2')
         for (let i = 0;i < data.length; i++) {
-          arr.push(JSON.parse('' + data[i].value.value))
+          arr.push(JSON.parse('' + data[i].value.value) as never)
         }
       })
     }
     callback(arr)
   }
 
-  queryById(kid, callback: Function) {
+  queryById(kid : string, callback: Function) {
     try {
       const KEY = this.keyPrefix + kid;
-      this.diaryKV.kvStore.get(KEY, function (err, data) {
+      this.diaryKV.kvStore!!.get(KEY, (err, data) => {
         if (err) {
           console.log(`getKVStore err: ${err}`);
-          callback("无数据")
-          return
+          callback("无数据");
+          return;
         }
-        callback(data)
+        callback(data);
         console.log(`get success data: ${data}`);
       })
     } catch (e) {
@@ -66,16 +67,16 @@ export class DiaryAPI {
     }
   }
 
-  deleteByKID(kid, callback: Function) {
+  deleteByKID(kid:string, callback: Function) {
     try {
       const KEY = this.keyPrefix + kid;
-      this.diaryKV.kvStore.delete(KEY, function (err, data) {
+      this.diaryKV.kvStore!!.delete(KEY, (err, data) => {
         if (err != undefined) {
           console.log(`delete err: ${err}`);
-          callback("删除失败8")
-          return
+          callback("删除失败");
+          return;
         }
-        callback(data)
+        callback(data);
         console.log(`get success data: ${data}`);
       })
     } catch (e) {
@@ -89,14 +90,14 @@ export class DiaryAPI {
     const VALUE = diary.toJSONString();
 
     try {
-      this.diaryKV.kvStore.put(KEY, VALUE, function (err, data) {
+      this.diaryKV.kvStore!!.put(KEY, VALUE, (err, data) => {
         if (err != undefined) {
           console.log(`put err: ${err}`);
-          callback("修改日记失败！")
+          callback("修改日记失败！");
           return;
         }
         console.log(`put success${data}`);
-        callback("添加日记成功！")
+        callback("添加日记成功！");
       });
 
     } catch (e) {
@@ -107,9 +108,9 @@ export class DiaryAPI {
 
   sync() {
     let deviceIDs: [] = []
-    this.diaryKV.kvStore.sync(deviceIDs, distributedKVStore.SyncMode.PUSH_PULL)
+    this.diaryKV.kvStore!!.sync(deviceIDs, distributedKVStore.SyncMode.PUSH_PULL)
   }
 }
 
-export let diaryAPI = new DiaryAPI()
-diaryAPI.init()
+export let diaryService = new DiaryService()
+diaryService.init()

@@ -4,7 +4,7 @@ import { Diary } from '../../bean/Diary';
 import DiaryItem from './DiaryItem';
 import hilog from '@ohos.hilog';
 import distributedKVStore from '@ohos.data.distributedKVStore';
-import { DiaryAPI } from '../../model/DiaryAPI';
+import { DiaryService } from '../../service/DiaryService';
 
 @Entry
 @Component
@@ -16,11 +16,12 @@ struct DiaryIndex {
     bundleName: 'com.saint.myapplication',
     context: getContext(this),
   }
-  @State diaryAPI: DiaryAPI = new DiaryAPI();
+  @State diaryService: DiaryService = new DiaryService();
 
   onPageShow() {
     if (router.getParams() != null) {
-      let msg : string = router.getParams()['msg']
+      let param : ParamMsg = router.getParams() as ParamMsg
+      let msg : string = param.msg
       if (msg != null) {
         prompt.showToast({
           message: msg,
@@ -33,10 +34,10 @@ struct DiaryIndex {
   }
 
   freshAll() {
-    this.diaryAPI.queryAll((result: []) => {
+    this.diaryService.queryAll((result: []) => {
       console.log('DiaryIndex freshAll callback...')
       this.count = result.length
-      this.listData = <Diary[]> result
+      this.listData = result as Diary[]
     })
   }
 
@@ -94,7 +95,7 @@ struct DiaryIndex {
           .padding(10)
           .margin(5)
           .onClick(() => {
-            let option = {
+            let option : router.RouterOptions = {
               url: "pages/diary/add"
             }
             router.pushUrl(option)
@@ -107,6 +108,10 @@ struct DiaryIndex {
   sync() {
     // this.diaryAPI.sync()
   }
+}
+
+class ParamMsg{
+  msg: string=''
 }
 
 // @Component

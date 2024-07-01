@@ -2,15 +2,14 @@ import BreakpointType from '../bean/BreanpointType';
 import BreakpointConstants from '../constants/BreakpointConstants';
 import { CommonConstants } from '../constants/CommonConstants';
 import BreakpointSystem from '../utils/BreakpointSystem';
-import {WeatherIndex } from './weather/WeatherIndex';
+import { WeatherIndex } from './weather/WeatherIndex';
 import { HomeIndex } from './home/HomeIndex';
 import RecordIndex from '../view/record/RecordIndex';
-import { UserIndex } from './user/UserIndex';
 import NotificationIndex from './notification/NotificationIndex';
 
 @Entry
 @Component
-struct Index {
+struct MainIndex {
   @State currentIndex: number = 0
   private breakpointSystem: BreakpointSystem = new BreakpointSystem()
   @StorageProp('currentBreakpoint') currentBreakpoint: string = BreakpointConstants.BREAKPOINT_SM
@@ -20,11 +19,11 @@ struct Index {
     this.breakpointSystem.register()
   }
 
-  onPageShow(){
+  onPageShow() {
     this.isPageShow = true
   }
 
-  onPageHide(){
+  onPageHide() {
     this.isPageShow = false
   }
 
@@ -44,47 +43,45 @@ struct Index {
   }
 
   build() {
-    Tabs({ barPosition: BreakpointConstants.BAR_POSITION.getValue(this.currentBreakpoint)}) {
-      TabContent() {
-        RecordIndex({isPageShow:this.isPageShow})
-      }.tabBar(this.TabBarBuilder($r('app.string.tab_record'), $r('app.media.ic_calendar'), 0))
+    Stack() {
+      Tabs({ barPosition: new BreakpointType({
+        sm: BarPosition.End,
+        md: BarPosition.End,
+        lg: BarPosition.Start
+      }).getValue(this.currentBreakpoint)}) {
+        TabContent() {
+          RecordIndex({ isPageShow: this.isPageShow })
+        }.tabBar(this.TabBarBuilder($r('app.string.tab_record'), $r('app.media.ic_calendar'), 0))
 
-      TabContent() {
-        WeatherIndex()
-      }.tabBar(this.TabBarBuilder($r('app.string.tab_weather'), $r('app.media.discover'), 1))
+        TabContent() {
+          WeatherIndex()
+        }.tabBar(this.TabBarBuilder($r('app.string.tab_weather'), $r('app.media.discover'), 1))
 
-      TabContent() {
-        NotificationIndex()
-      }.tabBar(this.TabBarBuilder($r('app.string.tab_user'), $r('app.media.ic_user_portrait'), 2))
+        TabContent() {
+          NotificationIndex()
+        }.tabBar(this.TabBarBuilder($r('app.string.tab_user'), $r('app.media.ic_user_portrait'), 2))
 
-      TabContent() {
-        HomeIndex()
-      }.tabBar(this.TabBarBuilder($r('app.string.tab_home'), $r('app.media.ic_home'), 3))
+        TabContent() {
+          HomeIndex()
+        }.tabBar(this.TabBarBuilder($r('app.string.tab_home'), $r('app.media.ic_home'), 3))
+      }
+      .width('100%')
+      .height('100%')
+      .onChange((index: number) => {
+        this.currentIndex = index
+      })
+      .vertical(new BreakpointType({
+        sm: false,
+        md: true,
+        lg: true
+      }).getValue(this.currentBreakpoint))
     }
-    .width('100%')
-    .height('100%')
-    .onChange(index => this.currentIndex = index)
-    .vertical(new BreakpointType({
-      sm: false,
-      md: true,
-      lg: true
-    }).getValue(this.currentBreakpoint))
+
   }
 
-
-
-  selectColor(index:number){
-     return this.currentIndex === index ? $r('app.color.primary_color') : $r('app.color.gray')
+  selectColor(index: number) {
+    return this.currentIndex === index ? $r('app.color.primary_color') : $r('app.color.gray')
   }
-
-  chooseBarPosition() {
-    return new BreakpointType({
-      sm: BarPosition.End,
-      md: BarPosition.Start,
-      lg: BarPosition.Start,
-    })[this.currentBreakpoint]
-  }
-
 }
 
 

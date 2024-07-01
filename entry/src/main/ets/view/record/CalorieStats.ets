@@ -12,7 +12,7 @@ export default struct CalorieStats {
 
   build() {
     Row({ space: CommonConstants.SPACE_6 }) {
-      this.StatusBuilder({label: '饮食摄入', value: this.intake})
+      this.StatusBuilder(new CalorieStatsInfo('饮食摄入', this.intake))
       Stack() {
         Progress({
           value: this.intake,
@@ -21,16 +21,16 @@ export default struct CalorieStats {
         }).width(120)
           .style({strokeWidth:CommonConstants.DEFAULT_10})
           .color($r('app.color.primary_color'))
-        this.StatusBuilder({label: '还可以吃', value: this.remainCalorie(), tips: `推荐${this.recommend}`})
+        this.StatusBuilder(new CalorieStatsInfo('还可以吃', this.remainCalorie(),`推荐${this.recommend}`))
       }
 
-      this.StatusBuilder({label: '运动消耗', value: this.expend})
+      this.StatusBuilder(new CalorieStatsInfo('运动消耗', this.expend))
     }.width('100%')
     .justifyContent(FlexAlign.SpaceEvenly)
     .padding({ top: 30, bottom: 35 })
   }
 
-  @Builder StatusBuilder($$:{label: string, value: number, tips?: string}) {
+  @Builder StatusBuilder($$:CalorieStatsInfo) {
     Column({ space: CommonConstants.SPACE_6 }) {
       Text($$.label)
         .fontColor($r('app.color.gray'))
@@ -46,5 +46,18 @@ export default struct CalorieStats {
       }
 
     }
+  }
+
+}
+
+class CalorieStatsInfo{
+  label: string
+  value: number
+  tips?: string
+
+  constructor(label: string, value: number, tips?:string) {
+    this.label = label
+    this.value = value
+    this.tips = tips
   }
 }

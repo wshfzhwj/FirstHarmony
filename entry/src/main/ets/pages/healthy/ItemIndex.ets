@@ -1,13 +1,19 @@
 import router from '@ohos.router'
 import { CommonConstants } from '../../constants/CommonConstants'
-import RecordItem from '../../viewmodel/RecordItem'
+import RecordItem from '../../model/RecordItemModel'
 import ItemCard from '../../view/item/ItemCard'
 import ItemList from '../../view/item/ItemList'
 import ItemPanelHeader from '../../view/item/ItemPanelHeader'
 import NumberKeyboard from '../../view/item/NumberKeyborad'
-import { RecordTypeEnum, RecordTypes } from '../../model/RecordTypeModel'
-import RecordType from '../../viewmodel/RecordType'
+import { RecordTypeEnum, RecordTypes } from '../../model/RecordType'
+import RecordType from '../../model/RecordTypeModel'
 import RecordService from '../../service/RecordService'
+import RecordTypeModel from '../../model/RecordTypeModel'
+import RecordItemModel from '../../model/RecordItemModel'
+
+class InfoTmp {
+  type: RecordTypeModel = new RecordTypeModel(0, $r("app.string.breakfast"), $r("app.media.ic_breakfast"), 423, 592)
+}
 
 @Entry
 @Component
@@ -15,11 +21,11 @@ struct ItemIndex {
   @State amount: number = 1
   @State value: string = ''
   @State showPanel: boolean = false
-  @State item: RecordItem = null
-  @State type: RecordType = RecordTypes[0]
+  @State item: RecordItem | null= null
+  @State type: RecordTypeModel = RecordTypes[0]
   @State isFood: boolean = true
 
-  onPanelShow(item: RecordItem) {
+  onPanelShow(item: RecordItemModel) {
     this.showPanel = true
     this.value = ''
     this.amount = 1
@@ -27,7 +33,7 @@ struct ItemIndex {
   }
 
   onPageShow() {
-    let params: any = router.getParams()
+    let params = router.getParams() as InfoTmp
     this.type = params.type
     this.isFood = this.type.id !== RecordTypeEnum.WORKOUT
   }
@@ -59,7 +65,7 @@ struct ItemIndex {
             .type(ButtonType.Normal)
             .borderRadius(6)
             .onClick(() => {
-              RecordService.insert(this.type.id, this.item.id, this.amount).then(() => {
+              RecordService.insert(this.type.id, this.item!!.id, this.amount).then(() => {
                 this.showPanel = false
               })
             })

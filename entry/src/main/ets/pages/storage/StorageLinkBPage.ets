@@ -11,15 +11,15 @@ struct StorageLinkBPage {
       Text('当前页面是 B Page').fontSize(30)
       Button(`${this.label}`)
         .onClick(()=>{
-          var v = AppStorage.Get<number>('count1')
-          AppStorage.Set('count1',v+1)
+          let v = AppStorage.get<number>('count1')
+          AppStorage.set('count1',v!+1)
           this.nextCount2++
         })
       Text(`nextCount1:${this.nextCount1}`).fontSize(25);
       Text(`nextCount2:${this.nextCount2}`).fontSize(25);
 
-      Text(`count1: ${AppStorage.Get<number>('count1').toString()}`).fontSize(25);
-      Text(`count2: ${AppStorage.Get<number>('count2').toString()}`).fontSize(25);
+      Text(`count1: ${AppStorage.get<number>('count1')!.toString()}`).fontSize(25);
+      Text(`count2: ${AppStorage.get<number>('count2')!.toString()}`).fontSize(25);
 
       Button('返回')
         .onClick(()=>{

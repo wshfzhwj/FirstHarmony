@@ -1,4 +1,4 @@
-export default class StatsInfo{
+export default class StatsInfoModel{
   /**
    * 当日摄入卡路里总量
    */

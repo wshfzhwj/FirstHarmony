@@ -1,58 +1,39 @@
-  /**
- * 数据库建表语句
+import RecordItem from './RecordItemModel'
+
+/**
+ * 饮食记录的页面数据模型
  */
-import relationalStore from '@ohos.data.relationalStore'
-import { ColumnInfo, ColumnType } from '../bean/ColumnInfo'
-import RecordPO from '../bean/RecordPO'
-import DbUtil from '../utils/DbUtil'
-const CREATE_TABLE_SQL: string = `
- CREATE TABLE IF NOT EXISTS record (
-   id INTEGER PRIMARY KEY AUTOINCREMENT,
-   type_id INTEGER NOT NULL,
-   item_id INTEGER NOT NULL,
-   amount DOUBLE NOT NULL,
-   create_time INTEGER NOT NULL
- )
- `
+export default class RecordModel {
+  /**
+   * 记录id
+   */
+  id: number
+  /**
+   * 饮食记录类型
+   */
+  typeId: number
 
-const COLUMNS: ColumnInfo[] = [
-  {name: 'id', columnName: 'id', type: ColumnType.LONG},
-  {name: 'typeId', columnName: 'type_id', type: ColumnType.LONG},
-  {name: 'itemId', columnName: 'item_id', type: ColumnType.LONG},
-  {name: 'amount', columnName: 'amount', type: ColumnType.DOUBLE},
-  {name: 'createTime', columnName: 'create_time', type: ColumnType.LONG}
-]
+  /**
+   * 卡路里总数
+   */
+  calorie: number
 
-const TABLE_NAME = 'record'
-const ID_COLUMN = 'id'
-const DATE_COLUMN = 'create_time'
+  /**
+   * 记录中的食物或运动信息
+   */
+  recordItem: RecordItem
 
-class RecordModel {
-  getCreateTableSql(): string {
-    return CREATE_TABLE_SQL
-  }
+  /**
+   * 食物数量或运动时长，如果是运动信息则无
+   */
+  amount: number
 
-  insert(record: RecordPO): Promise<number>{
-    return DbUtil.insert(TABLE_NAME, record, COLUMNS)
-  }
-
-  deleteById(id: number): Promise<number>{
-    // 1.删除条件
-    let predicates = new relationalStore.RdbPredicates(TABLE_NAME)
-    predicates.equalTo(ID_COLUMN, id)
-    // 2.删除
-    return DbUtil.delete(predicates)
-  }
-
-  listByDate(date: number): Promise<RecordPO[]>{
-    // 1.查询条件
-    let predicates = new relationalStore.RdbPredicates(TABLE_NAME)
-    predicates.equalTo(DATE_COLUMN, date)
-    // 2.查询
-    return DbUtil.queryForList(predicates, COLUMNS)
+  constructor(id: number, typeId: number, calorie: number,
+    recordItem: RecordItem, amount: number = 0) {
+    this.id = id
+    this.typeId = typeId
+    this.calorie = calorie
+    this.recordItem = recordItem
+    this.amount = amount
   }
 }
-
-let recordModel = new RecordModel()
-
-export default recordModel as RecordModel

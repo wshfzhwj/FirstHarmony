@@ -6,7 +6,8 @@ export default struct NumberKeyboard {
   @Link amount: number
   @Link value: string
 
-  @Styles keyBoxStyle(){
+  @Styles
+  keyBoxStyle(){
     .backgroundColor(Color.White)
     .height(60)
     .borderRadius(8)
@@ -14,7 +15,7 @@ export default struct NumberKeyboard {
 
   build() {
     Grid() {
-      ForEach(this.numbers, num => {
+      ForEach(this.numbers, (num: string) => {
         GridItem() {
           Text(num)
             .fontSize(20)

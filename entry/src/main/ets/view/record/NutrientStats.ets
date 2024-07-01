@@ -1,5 +1,12 @@
 import { CommonConstants } from '../../constants/CommonConstants'
 
+interface GeneratedTypeLiteralInterface_1 {
+  label: string;
+  value: number;
+  recommend: number;
+  color: ResourceStr;
+}
+
 @Component
 export default struct NutrientStats {
   @Prop carbon: number
@@ -34,12 +41,7 @@ export default struct NutrientStats {
     .padding({ top: 30, bottom: 35 })
   }
 
-  @Builder StatusBuilder($$: {
-    label: string,
-    value: number,
-    recommend: number,
-    color: ResourceStr
-  }) {
+  @Builder StatusBuilder($$: GeneratedTypeLiteralInterface_1) {
     Column({ space: CommonConstants.SPACE_6 }) {
       Stack() {
         Progress({
